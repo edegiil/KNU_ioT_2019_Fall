@@ -1,0 +1,203 @@
+From ca39dab6f5a09e63aeceee965b9a95a45efc069b Mon Sep 17 00:00:00 2001
+From: ubinos.org <ubinos.org@gmail.com>
+Date: Tue, 24 Sep 2019 22:57:17 +0900
+Subject: [PATCH] Temporarily fix build error on ubnos 3 development
+ environment
+
+---
+ .../cfg/armcortexm_sam4eek/ubiconfig.mk          |  2 +-
+ .../cfg/armcortexm_sam4eek/ubiconfig.mk          |  2 +-
+ .../lib_ubik/cfg/armcortexm_sam4eek/ubiconfig.mk |  2 +-
+ kernel/porting/lib_sam4e/Makefile                |  3 +--
+ .../cfg/armcortexm_sam4eek/ubiconfig.mk          | 16 ++++++++--------
+ .../cfg/armcortexm_sam4eek/ubiconfig.mk          |  4 ++--
+ .../cfg/armcortexm_sam3sek/ubiconfig.mk          |  2 +-
+ .../cfg/armcortexm_sam4eek/ubiconfig.mk          |  2 +-
+ .../cfg/armcortexm_sam4sek2/ubiconfig.mk         |  2 +-
+ .../cfg/armcortexm_sam4eek/ubiconfig.mk          |  2 +-
+ 10 files changed, 18 insertions(+), 19 deletions(-)
+
+diff --git a/kernel/common/lib_ubiclib/cfg/armcortexm_sam4eek/ubiconfig.mk b/kernel/common/lib_ubiclib/cfg/armcortexm_sam4eek/ubiconfig.mk
+index 70c02f6..33f7cf5 100755
+--- a/kernel/common/lib_ubiclib/cfg/armcortexm_sam4eek/ubiconfig.mk
++++ b/kernel/common/lib_ubiclib/cfg/armcortexm_sam4eek/ubiconfig.mk
+@@ -35,7 +35,7 @@ CFLAG_OPSTATE                   = -mthumb
+ CFALG_OPTIMIZATION              = -O0
+ CFALG_DEBUG                     = -g3
+ CFLAG_INCLUDE                   = -I$(ITFDIR)
+-CFALG_MISC                      = -fomit-frame-pointer -Werror -Wall -fmessage-length=0 -c
++CFALG_MISC                      = -fomit-frame-pointer -Wall -fmessage-length=0 -c
+ 
+ CFLAGS                          = $(CFLAG_ARCH) $(CFALG_OPTIMIZATION) $(CFALG_DEBUG) $(CFLAG_INCLUDE) $(CFALG_MISC)
+ CXXFLAGS                        = $(CFLAGS)
+diff --git a/kernel/common/lib_ubiclib_port_arm_gpl/cfg/armcortexm_sam4eek/ubiconfig.mk b/kernel/common/lib_ubiclib_port_arm_gpl/cfg/armcortexm_sam4eek/ubiconfig.mk
+index 931de0f..2f1faf8 100755
+--- a/kernel/common/lib_ubiclib_port_arm_gpl/cfg/armcortexm_sam4eek/ubiconfig.mk
++++ b/kernel/common/lib_ubiclib_port_arm_gpl/cfg/armcortexm_sam4eek/ubiconfig.mk
+@@ -34,7 +34,7 @@ CFLAG_OPSTATE                   = -mthumb
+ CFALG_OPTIMIZATION              = -O0
+ CFALG_DEBUG                     = -g3
+ CFLAG_INCLUDE                   = -I$(ITFDIR)
+-CFALG_MISC                      = -fomit-frame-pointer -Werror -Wall -fmessage-length=0 -c
++CFALG_MISC                      = -fomit-frame-pointer -Wall -fmessage-length=0 -c
+ 
+ ASFLAG_ARCH                      = -mcpu=cortex-m4 -mlittle-endian
+ ASFLAG_ARCH						+= -D__SAM4E16E__
+diff --git a/kernel/common/lib_ubik/cfg/armcortexm_sam4eek/ubiconfig.mk b/kernel/common/lib_ubik/cfg/armcortexm_sam4eek/ubiconfig.mk
+index b4ee312..4cb6a01 100755
+--- a/kernel/common/lib_ubik/cfg/armcortexm_sam4eek/ubiconfig.mk
++++ b/kernel/common/lib_ubik/cfg/armcortexm_sam4eek/ubiconfig.mk
+@@ -35,7 +35,7 @@ CFLAG_OPSTATE                   = -mthumb
+ CFALG_OPTIMIZATION              = -O0
+ CFALG_DEBUG                     = -g3
+ CFLAG_INCLUDE                   = -I$(ITFDIR)
+-CFALG_MISC                      = -fomit-frame-pointer -Werror -Wall -fmessage-length=0 -c
++CFALG_MISC                      = -fomit-frame-pointer -Wall -fmessage-length=0 -c
+ 
+ CFLAGS                          = $(CFLAG_ARCH) $(CFALG_OPTIMIZATION) $(CFALG_DEBUG) $(CFLAG_INCLUDE) $(CFALG_MISC)
+ CXXFLAGS                        = $(CFLAGS)
+diff --git a/kernel/porting/lib_sam4e/Makefile b/kernel/porting/lib_sam4e/Makefile
+index 7062054..6b8e1c2 100755
+--- a/kernel/porting/lib_sam4e/Makefile
++++ b/kernel/porting/lib_sam4e/Makefile
+@@ -5,7 +5,7 @@
+ #OUTDIR = out
+ #ITFDIR = $(realpath ../../../interface)
+ 
+-SRCDIR = $(realpath src)
++SRCDIR = $(realpath .)
+ 
+ MAKE_FUNC = \
+ make $(1) \
+@@ -54,4 +54,3 @@ ubiconfig.h:
+ 	cp -f cfg/$(CONFIG)/ubiconfig.h  ubiconfig.h
+ ubiconfig.mk:
+ 	cp -f cfg/$(CONFIG)/ubiconfig.mk ubiconfig.mk
+-		
+diff --git a/kernel/porting/lib_sam4e/cfg/armcortexm_sam4eek/ubiconfig.mk b/kernel/porting/lib_sam4e/cfg/armcortexm_sam4eek/ubiconfig.mk
+index 3cbdb3d..3482621 100755
+--- a/kernel/porting/lib_sam4e/cfg/armcortexm_sam4eek/ubiconfig.mk
++++ b/kernel/porting/lib_sam4e/cfg/armcortexm_sam4eek/ubiconfig.mk
+@@ -25,7 +25,7 @@ AS                              = $(TARGET_TOOLCHAIN_PREFIX)gcc
+ AR                              = $(TARGET_TOOLCHAIN_PREFIX)ar
+ LD                              = $(TARGET_TOOLCHAIN_PREFIX)g++
+ 
+-#CFLAG_ARCH                      = -mcpu=arm7tdmi -mthumb-interwork -mlittle-endian -msoft-float -D__SOCHECK__ -msocheck -D__SUCHECK__ -msucheck 
++#CFLAG_ARCH                      = -mcpu=arm7tdmi -mthumb-interwork -mlittle-endian -msoft-float -D__SOCHECK__ -msocheck -D__SUCHECK__ -msucheck
+ #CFLAG_ARCH                      = -mcpu=cortex-m4 -mlittle-endian -msoft-float
+ #CFLAG_ARCH                      = -mcpu=cortex-m4 -mlittle-endian -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -DARM_MATH_CM4
+ CFLAG_ARCH                      = -mcpu=cortex-m4 -mlittle-endian -mfloat-abi=softfp -mfpu=fpv4-sp-d16 -DARM_MATH_CM4 -D__VFP_FP__ -D__FPU_PRESENT=1
+@@ -65,7 +65,7 @@ INCLUDE_MCU_CORE				+= -I$(SAMLIB_PATH)/sam/utils/preprocessor
+ INCLUDE_MCU_CORE				+= -I$(SAMLIB_PATH)/sam/boards/sam4e_ek
+ INCLUDE_MCU_CORE				+= -I$(SAMLIB_PATH)/sam/drivers/pmc
+ ######################################################################
+-				
++
+ INCLUDE_SDMMC					+= -I$(SAMLIB_PATH)/common/components/memory/sd_mmc
+ INCLUDE_USB_STD					+= -I$(SAMLIB_PATH)/common/services/usb/class/cdc/device
+ INCLUDE_USB_STD					+= -I$(SAMLIB_PATH)/common/services/usb/class/cdc
+@@ -127,11 +127,11 @@ CFLAGS_nosocheck__thumb         = $(CFLAGS) -mthumb
+ 
+ ################
+ 
+-OBJS_entry                      = 
++OBJS_entry                      =
+ 
+-OBJS                            = 
+-DEPS                            = 
+-LIBS                            = 
++OBJS                            =
++DEPS                            =
++LIBS                            =
+ 
+ ################
+ 
+@@ -188,9 +188,9 @@ CSRCS_default					+= sam/applications/sam_low_power/sam4e16e_sam4e_ek/low_power_
+ #CSRCS_default                  +=  sam/drivers/wdt/wdt_sam4l.c
+ 
+ COBJS_default                  += $(patsubst %.c,%.o, $(CSRCS_default))
+-$(COBJS_default) : %.o: $(SRCDIR)/../%.c
++$(COBJS_default) : %.o: $(SRCDIR)/%.c
+ 	@$(MKDIR) $(dir $@)
+-	$(CC_default) $(CFLAGS_default) -MD -MP -MF"$(@:%.o=%.d)" -o "$@" "$<"	
++	$(CC_default) $(CFLAGS_default) -MD -MP -MF"$(@:%.o=%.d)" -o "$@" "$<"
+ OBJS                           += $(COBJS_default)
+ DEPS                           += $(patsubst %.o,%.d, $(COBJS_default))
+ 
+diff --git a/kernel/porting/lib_ubiclib_arm/cfg/armcortexm_sam4eek/ubiconfig.mk b/kernel/porting/lib_ubiclib_arm/cfg/armcortexm_sam4eek/ubiconfig.mk
+index 43f91ec..b29900c 100755
+--- a/kernel/porting/lib_ubiclib_arm/cfg/armcortexm_sam4eek/ubiconfig.mk
++++ b/kernel/porting/lib_ubiclib_arm/cfg/armcortexm_sam4eek/ubiconfig.mk
+@@ -35,7 +35,7 @@ CFLAG_OPSTATE                   = -mthumb
+ CFALG_OPTIMIZATION              = -O0
+ CFALG_DEBUG                     = -g3
+ CFLAG_INCLUDE                   = -I$(ITFDIR)
+-CFALG_MISC                      = -fomit-frame-pointer -Werror -Wall -fmessage-length=0 -c
++CFALG_MISC                      = -fomit-frame-pointer -Wall -fmessage-length=0 -c
+ 
+ CFLAGS                          = $(CFLAG_ARCH) $(CFALG_OPTIMIZATION) $(CFALG_DEBUG) $(CFLAG_INCLUDE) $(CFALG_MISC)
+ CXXFLAGS                        = $(CFLAGS)
+@@ -78,7 +78,7 @@ CC_nosocheck__thumb             = $(CC)
+ CFLAGS_nosocheck__thumb         = $(CFLAGS) -mthumb
+ 
+ CC_assemble                     = $(CC)
+-CFLAGS_assemble                 = $(CFLAG_ARCH) $(CFALG_OPTIMIZATION) -fomit-frame-pointer -Werror -Wall -fmessage-length=0 $(CFLAG_OPSTATE)
++CFLAGS_assemble                 = $(CFLAG_ARCH) $(CFALG_OPTIMIZATION) -fomit-frame-pointer -Wall -fmessage-length=0 $(CFLAG_OPSTATE)
+ 
+ ################
+ 
+diff --git a/kernel/porting/lib_ubik_armcortexm/cfg/armcortexm_sam3sek/ubiconfig.mk b/kernel/porting/lib_ubik_armcortexm/cfg/armcortexm_sam3sek/ubiconfig.mk
+index a806fe6..fae1d29 100755
+--- a/kernel/porting/lib_ubik_armcortexm/cfg/armcortexm_sam3sek/ubiconfig.mk
++++ b/kernel/porting/lib_ubik_armcortexm/cfg/armcortexm_sam3sek/ubiconfig.mk
+@@ -30,7 +30,7 @@ CFLAG_OPSTATE                   = -mthumb
+ CFALG_OPTIMIZATION              = -O0
+ CFALG_DEBUG                     = -g3
+ CFLAG_INCLUDE                   = -I$(ITFDIR)
+-CFALG_MISC                      = -fomit-frame-pointer -Werror -Wall -fmessage-length=0 -c
++CFALG_MISC                      = -fomit-frame-pointer -Wall -fmessage-length=0 -c
+ 
+ CFLAGS                          = $(CFLAG_ARCH) $(CFALG_OPTIMIZATION) $(CFALG_DEBUG) $(CFLAG_INCLUDE) $(CFALG_MISC)
+ CXXFLAGS                        = $(CFLAGS)
+diff --git a/kernel/porting/lib_ubik_armcortexm/cfg/armcortexm_sam4eek/ubiconfig.mk b/kernel/porting/lib_ubik_armcortexm/cfg/armcortexm_sam4eek/ubiconfig.mk
+index 5d1aab3..8eecebd 100755
+--- a/kernel/porting/lib_ubik_armcortexm/cfg/armcortexm_sam4eek/ubiconfig.mk
++++ b/kernel/porting/lib_ubik_armcortexm/cfg/armcortexm_sam4eek/ubiconfig.mk
+@@ -35,7 +35,7 @@ CFLAG_OPSTATE                   = -mthumb
+ CFALG_OPTIMIZATION              = -O0
+ CFALG_DEBUG                     = -g3
+ CFLAG_INCLUDE                   = -I$(ITFDIR)
+-CFALG_MISC                      = -fomit-frame-pointer -Werror -Wall -fmessage-length=0 -c
++CFALG_MISC                      = -fomit-frame-pointer -Wall -fmessage-length=0 -c
+ 
+ CFLAGS                          = $(CFLAG_ARCH) $(CFALG_OPTIMIZATION) $(CFALG_DEBUG) $(CFLAG_INCLUDE) $(CFALG_MISC)
+ CXXFLAGS                        = $(CFLAGS)
+diff --git a/kernel/porting/lib_ubik_armcortexm/cfg/armcortexm_sam4sek2/ubiconfig.mk b/kernel/porting/lib_ubik_armcortexm/cfg/armcortexm_sam4sek2/ubiconfig.mk
+index ffdd5d5..ffa892d 100755
+--- a/kernel/porting/lib_ubik_armcortexm/cfg/armcortexm_sam4sek2/ubiconfig.mk
++++ b/kernel/porting/lib_ubik_armcortexm/cfg/armcortexm_sam4sek2/ubiconfig.mk
+@@ -30,7 +30,7 @@ CFLAG_OPSTATE                   = -mthumb
+ CFALG_OPTIMIZATION              = -O0
+ CFALG_DEBUG                     = -g3
+ CFLAG_INCLUDE                   = -I$(ITFDIR)
+-CFALG_MISC                      = -fomit-frame-pointer -Werror -Wall -fmessage-length=0 -c
++CFALG_MISC                      = -fomit-frame-pointer -Wall -fmessage-length=0 -c
+ 
+ CFLAGS                          = $(CFLAG_ARCH) $(CFALG_OPTIMIZATION) $(CFALG_DEBUG) $(CFLAG_INCLUDE) $(CFALG_MISC)
+ CXXFLAGS                        = $(CFLAGS)
+diff --git a/kernel/porting/lib_ubik_armcortexm_sam4eek/cfg/armcortexm_sam4eek/ubiconfig.mk b/kernel/porting/lib_ubik_armcortexm_sam4eek/cfg/armcortexm_sam4eek/ubiconfig.mk
+index ea803fa..9a70953 100755
+--- a/kernel/porting/lib_ubik_armcortexm_sam4eek/cfg/armcortexm_sam4eek/ubiconfig.mk
++++ b/kernel/porting/lib_ubik_armcortexm_sam4eek/cfg/armcortexm_sam4eek/ubiconfig.mk
+@@ -36,7 +36,7 @@ CFALG_OPTIMIZATION              = -O0
+ CFALG_DEBUG                     = -g3
+ CFLAG_INCLUDE                   = -I$(ITFDIR)
+ CFALG_MISC                      = -fomit-frame-pointer -Wall -fmessage-length=0 -c
+-#CFALG_MISC                      = -fomit-frame-pointer -Werror -Wall -fmessage-length=0 -c
++#CFALG_MISC                      = -fomit-frame-pointer -Wall -fmessage-length=0 -c
+ 
+ CFLAG_SAM						= -D__SAM4E16E__
+ 
+-- 
+2.20.1
+

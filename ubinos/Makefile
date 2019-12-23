@@ -1,0 +1,2 @@
+include config_APV_armcortexm_sam4eek_debug.mk
+include makefile_APV.mk
